@@ -1,0 +1,9 @@
+{
+  "name": "mandelbrotset",
+  "version": "1.0.0",
+  "main": "madelbrot.py",
+  "repository": "git@github.com:SVJayanthi/MandelbrotSet.git",
+  "author": "Sravan Jayanthi <sravanvjayanthi@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
