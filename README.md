@@ -1,6 +1,7 @@
 # Mandelbrot Set
 
-This is a simulation and rendering of the Mandelbrot Set,  named after mathematician Benoit Mandelbrot, that provides a visual for the set of complex numbers that remain bounded in absolute value from the function
+This is a simulation and rendering of the Mandelbrot Set,  named after mathematician Benoit Mandelbrot, that provides a visual for the set of complex numbers that remain bounded in absolute value from the function.
+
 The function is
 
   `f_{n+1} = f_{n}^2 + c`
@@ -9,7 +10,7 @@ with the initial condition simply formed by taking the coordinates in the comple
 
   `f_{0} = x + iy`
 
-It produces an aesthetic depiction of a fractal that does not diverge with progressively recursive details that are similar to other parts of the fractal.
+It produces an aesthetic depiction of a fractal that does not diverge with recursive details similar in design to other parts of the fractal.
 
 ![mandelbrot.png](https://github.com/SVJayanthi/MandelbrotSet/blob/master/output/mandelbrot_1.png)
 
