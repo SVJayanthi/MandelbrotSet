@@ -1,11 +1,8 @@
-"# MandelbrotSet" 
-# FullStack
+# Mandelbrot Set
 
-This is a platform I began building for a client. After he signed and I started working he decided to pivot and not pay me. Sometimes you get screwed in business but at least now I have a cool boilerplate to give away.
+This is a simulation and rendering of the Mandelbrot Set,  named after mathematician Benoit Mandelbrot, that provides a visual for the set of complex numbers that remain bounded in absolute value from the function {\displaystyle f_{c}(z)=z^{2}+c}. It produces an aesthetic depiction of a fractal that does not diverge with progressively recursive details that are similar to other parts of the fractal.
 
-[follow me on Twitter](https://twitter.com/TrillCyborg) - [follow the designer](https://twitter.com/traf)
-
-![fullstack.gif](https://i.imgur.com/jYb4YQL.gif)
+![mandelbrot.png](https://github.com/SVJayanthi/MandelbrotSet/blob/master/output/mandelbrot_1.png)
 
 ## What is this?
 
