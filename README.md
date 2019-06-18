@@ -22,7 +22,8 @@ The programs were designed to simulate and render efficiently and each implement
 
 ### Dynamic
 
-```@autojit
+```
+@autojit
 def create_fractal(min_x, max_x, min_y, max_y, image, iters):
   height = image.shape[0]
   width = image.shape[1]
@@ -44,7 +45,8 @@ dt = timer() - start
 
 ### CUDA
 
-```@cuda.jit
+```
+@cuda.jit
 def mandel_kernel(min_x, max_x, min_y, max_y, image, iters):
   height = image.shape[0]
   width = image.shape[1]
