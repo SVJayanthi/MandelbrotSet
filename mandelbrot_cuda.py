@@ -124,5 +124,4 @@ dt = timer() - start
 print("Mandelbrot created on GPU in %f s" % dt)
 
 imshow(gimage)
->>>>>>> 96ea410061263cf51a9c9e5007e809959fc340dd
 show()
