@@ -14,48 +14,63 @@ with the initial condition simply formed by taking the coordinates in the comple
 
 It produces an aesthetic depiction of a fractal that does not diverge with recursive details similar in design to other parts of the fractal.
 
-## What is this?
+## Code
 
-This project was supposed to be an app where users receive benefits for paying their rent through the platform as opposed to check or bank transfer. Since this repo rose to the top of _Hacker News_, _r/programming_ and _Github_ I have decided it deserves a new life. So allow me to reintroduce it as a full-stack boilerplate with my current top picks for tech I like to use on client work.
+### Implementation
 
-If you're trying to expand into some of the technologies I'm using here, star it, fork it and start playing! Feel free to find my email at the bottom of [my site](https://trxrg.com/) and reach out with any questions.
+The programs were designed to simulate and render efficiently and each implemented unique high-performance optimization compilers. The namesake program was designed utilizing NUMBA AutoJIT high performance python compiler. The cuda extension was designed implementing parrallel computation with NVIDIA CUDA GPU technology. 
 
-## Stack
+### Dynamic
 
-### Client
+```@autojit
+def create_fractal(min_x, max_x, min_y, max_y, image, iters):
+  height = image.shape[0]
+  width = image.shape[1]
 
-Built using `react-native-web` because it's really cool and really easy to turn into a mobile app
+  pixel_size_x = (max_x - min_x) / width
+  pixel_size_y = (max_y - min_y) / height
 
-### Server
+  for x in range(width):
+    real = min_x + x * pixel_size_x
+    for y in range(height):
+      imag = min_y + y * pixel_size_y 
+      image[y, x] = mandel(real, imag, iters)
 
-Written in Node.js. The server uses GraphQL with `apollo-server` for delivering data between client and server and `typegoose` for interacting with Mongo in a nice type-friendly way.
-Accounts are set up using the wonderful `accounts.js` library.
+image = np.zeros((1024, 1536), dtype = np.uint8)
+start = timer()
+create_fractal(-2.0, 1.0, -1.0, 1.0, image, 20) 
+dt = timer() - start
+```
 
-### Generators
+### CUDA
 
-`type-graphql` and `graphql-codegen` are used to generate types for all my GraphQL resolvers to keep client and server totally and beautifully in sync.
+```@cuda.jit
+def mandel_kernel(min_x, max_x, min_y, max_y, image, iters):
+  height = image.shape[0]
+  width = image.shape[1]
 
-## Other cool things
+  pixel_size_x = (max_x - min_x) / width
+  pixel_size_y = (max_y - min_y) / height
 
-I've included a number of animations using plain CSS and `react-spring`. If you're a react developer and want to animate your work learn `react-spring`. Thank me later. This project is using Plaid to access read info for users bank accounts and Google Place API for address lookup.
+  startX, startY = cuda.grid(2)
+  gridX = cuda.gridDim.x * cuda.blockDim.x;
+  gridY = cuda.gridDim.y * cuda.blockDim.y;
 
-## Usage
+  for x in range(startX, width, gridX):
+    real = min_x + x * pixel_size_x
+    for y in range(startY, height, gridY):
+      imag = min_y + y * pixel_size_y 
+      image[y, x] = mandel_gpu(real, imag, iters)
 
-To get this working right you'll need to create API keys for [Google Places](https://developers.google.com/places/web-service/intro) and [Plaid](https://plaid.com/). Then add them to the client and server config files.
+gimage = np.zeros((1024, 1536), dtype = np.uint8)
+blockdim = (32, 8)
+griddim = (32, 16)
 
-```sh
-# Run mongo
-sudo mongod
-
-# In ./server
-yarn install
-yarn watch
-
-# In ./client
-cp ./src/config/example.env.json ./src/config/development.env.json
-yarn install
-yarn start
-yarn gen:types:watch
+start = timer()
+d_image = cuda.to_device(gimage)
+mandel_kernel[griddim, blockdim](-2.0, 1.0, -1.0, 1.0, d_image, 20) 
+d_image.to_host()
+dt = timer() - start
 ```
 
 ## License
