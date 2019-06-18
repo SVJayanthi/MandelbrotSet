@@ -100,5 +100,4 @@ dt = timer() - start
 
 print("Mandelbrot created in %f s" % dt)
 imshow(image)
->>>>>>> 96ea410061263cf51a9c9e5007e809959fc340dd
 show()
